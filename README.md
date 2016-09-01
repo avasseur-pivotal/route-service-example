@@ -1,8 +1,30 @@
+# Cloud Foundry Route Service - BASIC AUTH Example
+
+This project is an example of a [Cloud Foundry Route Service][r] written with Spring Boot[b].  This application is based on the example at https://github.com/nebhale/route-service-example but in addition of logging requests, it adds a BASIC AUTH to all requests.
+
+The user / password is hardcoded in this route service application but one could change this.  
+See the file `SecurityConfig.java` and the code
+```
+http
+            .authorizeRequests()
+                .anyRequest().authenticated()
+                .and().httpBasic();
+               
+...       
+auth
+            .inMemoryAuthentication()
+                .withUser("user").password("password").roles("USER");
+
+```
+
 # Cloud Foundry Route Service Example
 
 This project is an example of a [Cloud Foundry Route Service][r] written with Spring Boot[b].  This application does the following to each request:
 
 1. Intercepts an incoming request
+
+1b. Apply BASIC AUTH
+
 2. Logs information about that incoming request
 3. Transforms the incoming request to an outgoing request
 4. Logs information about that outgoing request
