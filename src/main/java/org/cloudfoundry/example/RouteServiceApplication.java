@@ -36,6 +36,8 @@ public class RouteServiceApplication {
     RestOperations restOperations() {
         RestTemplate restTemplate = new RestTemplate(new TrustEverythingClientHttpRequestFactory());
         restTemplate.setErrorHandler(new NoErrorsResponseErrorHandler());
+        
+        
         return restTemplate;
     }
 
@@ -75,6 +77,15 @@ public class RouteServiceApplication {
             }
 
         }
+
+        // always follow redirect (by default it follows only GET)
+		@Override
+		protected void prepareConnection(HttpURLConnection connection, String httpMethod) throws IOException {
+			super.prepareConnection(connection, httpMethod);
+			connection.setInstanceFollowRedirects(true);
+		}
+        
+        
     }
 
     private static final class TrustEverythingHostNameVerifier implements HostnameVerifier {
